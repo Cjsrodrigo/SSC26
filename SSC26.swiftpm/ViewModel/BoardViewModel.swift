@@ -17,6 +17,8 @@ final class BoardViewModel: ObservableObject {
     @Published var currentPageId: Int = 1
     @Published var tokens: [String] = []
     @Published var isYesNoPresented: Bool = false
+    @Published var highlightCount: Int = 0
+
     
     
     let speech = SpeechService()
