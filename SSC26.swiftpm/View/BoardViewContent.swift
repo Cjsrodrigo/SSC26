@@ -9,48 +9,48 @@ import SwiftUI
 
 struct BoardViewContent: View {
     @ObservedObject var vm: BoardViewModel
-    
+
     @GestureState private var erasePressed = false
-    
+
     @State private var leftColumnHeight: CGFloat = 0
     @Environment(\.displayScale) private var displayScale
     private var onePixel: CGFloat { 2 / displayScale }
-    
+
     private struct LeftHeightKey: PreferenceKey {
         static var defaultValue: CGFloat { 0 }
         static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
             value = max(value, nextValue())
         }
     }
-    
+
     private let tileSize: CGFloat = 85
     private let sideSize: CGFloat = 90
-    
+
     private let gridSpacing: CGFloat = 22
     private let rowSpacing: CGFloat = 16
-    
+
     private var gridWidth: CGFloat { (tileSize * 6) + (gridSpacing * 5) }
     private var messageBoxWidth: CGFloat { (tileSize * 3) + (gridSpacing * 2) }
-    
+
     private var gridCols: [GridItem] {
         Array(repeating: GridItem(.fixed(tileSize), spacing: gridSpacing), count: 6)
     }
-    
+
     private let tabShape = UnevenRoundedRectangle(
         cornerRadii: .init(topLeading: 15, bottomLeading: 0, bottomTrailing: 0, topTrailing: 15)
     )
-    
+
     var body: some View {
         ZStack(alignment: .top) {
             Color(red: 0.60, green: 0.83, blue: 0.86).ignoresSafeArea()
-            
+
             VStack(spacing: 12) {
-                
+
                 // Tabs
                 HStack(spacing: -5) {
                     ForEach(vm.pages) { p in
                         let isSelected = (vm.currentPageId == p.id)
-                        
+
                         Button {
                             vm.currentPageId = p.id
                         } label: {
@@ -64,10 +64,9 @@ struct BoardViewContent: View {
                                 .overlay(tabShape.stroke(Color.black, lineWidth: 1))
                                 .shadow(radius: 2, x: 4)
                                 .shadow(radius: 2, x: -4)
-                            
-                                .anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
-                                    [.tab(pageId: p.id): $0]
-                                }
+                        }
+                        .anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
+                            [.tab(pageId: p.id): $0]
                         }
                         .zIndex(isSelected ? 10 : 0)
                     }
@@ -75,22 +74,23 @@ struct BoardViewContent: View {
                 .frame(maxWidth: .infinity)
                 .ignoresSafeArea(.container, edges: .horizontal)
                 .padding(.top, 16)
-                
+
                 // Content columns
                 HStack(alignment: .center, spacing: 16) {
-                    
+
                     // LEFT COLUMN
                     VStack(alignment: .leading, spacing: rowSpacing) {
-                        
+
                         // Top controls
                         HStack(spacing: gridSpacing) {
-                            
+
                             // Speak
                             Button { vm.speakMessage() } label: {
                                 VStack(spacing: 6) {
                                     Image(systemName: "speaker.wave.2.fill")
                                         .font(.system(size: 30))
-                                    Text("Speak").font(.system(size: 13, weight: .regular))
+                                    Text("Speak")
+                                        .font(.system(size: 13, weight: .regular))
                                 }
                                 .foregroundStyle(.black)
                                 .frame(width: tileSize, height: tileSize)
@@ -101,13 +101,11 @@ struct BoardViewContent: View {
                                     RoundedRectangle(cornerRadius: 8)
                                         .stroke(Color.black, lineWidth: 3)
                                 )
-                                //                                // ✅ ÂNCORA DO SPEAK (já está ok)
-                                //                                .anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
-                                //                                    [.speakButton: $0]
-                                //                                }
                             }
-                            
-                            // Message box
+                            .anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
+                                [GuidedTarget.speakButton: $0]
+                            }
+
                             // Message box (fixa: sempre preta)
                             ZStack(alignment: .leading) {
                                 RoundedRectangle(cornerRadius: 8)
@@ -121,7 +119,10 @@ struct BoardViewContent: View {
                                     .frame(maxWidth: .infinity, alignment: .leading)
                             }
                             .frame(width: messageBoxWidth, height: tileSize)
-                            
+                            .anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
+                                [GuidedTarget.messageBox: $0]
+                            }
+
                             // Copy
                             Button { vm.copyMessage() } label: {
                                 VStack(spacing: 6) {
@@ -138,14 +139,17 @@ struct BoardViewContent: View {
                                     RoundedRectangle(cornerRadius: 8)
                                         .stroke(Color.black, lineWidth: 3)
                                 )
+                            }.anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
+                                [GuidedTarget.copyButton: $0]
                             }
-                            
+
                             // Erase
                             VStack(spacing: 6) {
                                 Image(systemName: "delete.left")
                                     .font(.system(size: 30))
                                 Text("Erase").font(.system(size: 13, weight: .regular))
                             }
+                           
                             .frame(width: tileSize, height: tileSize)
                             .background(Color.white)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
@@ -166,23 +170,29 @@ struct BoardViewContent: View {
                             .simultaneousGesture(
                                 TapGesture().onEnded { vm.eraseLast() }
                             )
+                            .anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
+                                [GuidedTarget.eraseButton: $0]
+                            }
                         }
                         .frame(width: gridWidth, alignment: .leading)
-                        
+
                         // Grid 2x6
                         LazyVGrid(columns: gridCols, spacing: rowSpacing) {
                             ForEach(vm.currentPage.tiles) { tile in
                                 Button {
-                                    vm.tapTile(tile)
+                                    vm.tryTapTile(tile)
                                 } label: {
                                     TileView(tile: tile, size: tileSize)
-                                    // ✅✅✅ ÂNCORA NO TILE BUTTON (é AQUI)
-                                        .anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
-                                            [.tile(pageId: vm.currentPageId, label: tile.label): $0]
-                                        }
+                                }
+                                .anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
+                                    [.tile(pageId: vm.currentPageId, label: tile.label): $0]
                                 }
                                 .buttonStyle(.plain)
+                               
                             }
+                        }
+                        .anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
+                            [.grid(pageId: vm.currentPageId): $0]   // ✅ âncora do GRID
                         }
                         .frame(width: gridWidth, alignment: .leading)
                         .padding(.top, 30)
@@ -193,14 +203,14 @@ struct BoardViewContent: View {
                         }
                     )
                     .onPreferenceChange(LeftHeightKey.self) { leftColumnHeight = $0 }
-                    
+
                     // separator
                     Rectangle()
                         .fill(Color.black)
                         .frame(width: onePixel, height: leftColumnHeight)
                         .frame(maxHeight: .infinity, alignment: .top)
                         .padding(.horizontal, 8)
-                    
+
                     // RIGHT COLUMN (sidebar)
                     VStack(spacing: 40) {
                         Button { vm.currentPageId = 1 } label: {
@@ -222,7 +232,7 @@ struct BoardViewContent: View {
                                     .stroke(Color.black, lineWidth: 3)
                             )
                         }
-                        
+
                         Button { vm.isYesNoPresented = true } label: {
                             VStack(spacing: 6) {
                                 Image("YesNoBoard")
@@ -246,20 +256,19 @@ struct BoardViewContent: View {
                     .foregroundStyle(.black)
                 }
                 .padding(.leading, 50)
-                
+
                 Spacer()
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
-            
+
             // Yes/No overlay (mantive igual)
             if vm.isYesNoPresented {
                 ZStack {
                     Color.black.opacity(0.35)
                         .ignoresSafeArea()
                         .onTapGesture { vm.isYesNoPresented = false }
-                    
+
                     VStack(spacing: 16) {
-                        
                         HStack(spacing: 22) {
                             Button {
                                 vm.speech.speak("yes")
@@ -277,12 +286,9 @@ struct BoardViewContent: View {
                                 .frame(width: 200, height: 200)
                                 .background(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(.green, lineWidth: 3)
-                                )
+                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(.green, lineWidth: 3))
                             }
-                            
+
                             Button {
                                 vm.speech.speak("no")
                                 vm.tokens.append("no")
@@ -299,13 +305,10 @@ struct BoardViewContent: View {
                                 .frame(width: 200, height: 200)
                                 .background(.white)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(.red, lineWidth: 3)
-                                )
+                                .overlay(RoundedRectangle(cornerRadius: 8).stroke(.red, lineWidth: 3))
                             }
                         }
-                        
+
                         Button("Close") { vm.isYesNoPresented = false }
                             .font(.system(size: 13, weight: .regular))
                             .padding(.top, 6)

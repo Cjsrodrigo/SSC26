@@ -10,8 +10,12 @@ import SwiftUI
 enum GuidedTarget: Hashable {
     case tile(pageId: Int, label: String)
     case tab(pageId: Int)        
+    case grid(pageId: Int)       
 
     case speakButton
+    case messageBox
+    case copyButton      // ✅ novo
+       case eraseButton 
 }
 
 struct GuidedAnchorKey: PreferenceKey {

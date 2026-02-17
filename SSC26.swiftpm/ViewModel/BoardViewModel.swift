@@ -5,77 +5,84 @@
 //  Created by Rodrigo Cont on 09/02/26.
 //
 
-import  SwiftUI
+import SwiftUI
 
 #if canImport(UIKit)
 import UIKit
 #endif
 
 @MainActor
-
 final class BoardViewModel: ObservableObject {
     @Published var currentPageId: Int = 1
     @Published var tokens: [String] = []
     @Published var isYesNoPresented: Bool = false
     @Published var highlightCount: Int = 0
 
-    
-    
+    // ✅ Challenge gate (reutilizável)
+    /// Se não for nil, só permite taps em tiles com esses labels.
+    var allowedTileLabels: Set<String>? = nil
+    /// Callback quando tocar em tile inválido (pra mostrar toast/som/haptic).
+    var onInvalidTileTap: ((PoddTile) -> Void)? = nil
+
     let speech = SpeechService()
     let pages: [PoddPage]
-    
+
     init(pages: [PoddPage]) {
         self.pages = pages
     }
-    
+
     var currentPage: PoddPage {
-        
         pages.first(where: { $0.id == currentPageId }) ?? pages[0]
-        
     }
-    
+
     var messageText: String {
         tokens.joined(separator: " ")
     }
-    
+
+    /// ✅ Use isso no BoardViewContent no lugar de tapTile(tile)
+    func tryTapTile(_ tile: PoddTile) {
+        if let allowed = allowedTileLabels, !allowed.contains(tile.label) {
+            onInvalidTileTap?(tile)
+            return
+        }
+        tapTile(tile)
+    }
+
     func tapTile(_ tile: PoddTile) {
-        
-       speech.speak(tile.speakText)
-        
-        switch tile.kind { 
+        speech.speak(tile.speakText)
+
+        switch tile.kind {
         case .word:
             if let t = tile.appendText, !t.isEmpty {
                 tokens.append(t)
             }
-            
+
         case .action(let action):
             switch action {
             case .backToPage1:
                 currentPageId = 1
-                
+
             case .openYesNoBoard:
                 isYesNoPresented = true
             }
         }
-        
-        
     }
-    
+
     func speakMessage() {
         speech.speak(messageText)
     }
-    
+
     func copyMessage() {
 #if canImport(UIKit)
         UIPasteboard.general.string = messageText
 #endif
     }
-    
+
     func eraseLast() {
         guard !tokens.isEmpty else { return }
         tokens.removeLast()
     }
-    
+
     func clearAll() {
         tokens.removeAll()
     }

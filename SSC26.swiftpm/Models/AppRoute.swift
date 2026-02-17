@@ -13,7 +13,19 @@ enum AppRoute: Equatable {
     
     case askIntroCard          // ✅ tela do balão (Missão Pedir 1)
     case askAutoModeling       // ✅ tutorial automático (Missão Pedir 2)
+    case askAfterBreadcrumb
+    case generalInteractive(step: Int)
+    case refuseChallenge
+    case refuseChallengeIntro
+
+    case refuseTutorialMessageBox
+    case refuseTutorialTopControls
+    case tutorialPdf(step: Int)   // TutorialPag1..4
+    case likeAppleChallenge
+    case postLikeAppleText(step: Int)
     
-    case autoPhrase           // (próxima fase) "I want to play more" sozinho
-    case freeBoard            // modo livre (final)
+      case freeBoard
+      case autoPhrase       // modo livre (final)
+    
+    
 }
