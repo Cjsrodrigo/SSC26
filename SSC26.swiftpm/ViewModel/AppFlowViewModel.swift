@@ -11,9 +11,38 @@ import SwiftUI
 final class AppFlowViewModel: ObservableObject {
     @Published var route: AppRoute = .intro(step: 0)
 
-    // ---- GID PDFs ----
-    let generalInteractiveCount = 3
-    let gidPdfNames = ["GID1", "GID2", "GID3"]
+//    // ---- GID PDFs ----
+//    let generalInteractiveCount = 3
+//    let gidPdfNames = ["GID1", "GID2", "GID3"]
+    // ---- GID (telas reais) ----
+    let generalInteractiveSteps: [GeneralInteractiveStepConfig] = [
+        .init(
+            sceneTitle: "GID1",
+            pageId: 1,
+            text: "In the first two pages you will find a general interaction display, with core words.",
+            dimOpacity: 0.80,
+            highlightGridAndTab: true,
+            cardTopPadding: 0
+        ),
+        .init(
+            sceneTitle: "GID2",
+            pageId: 2,
+            text: "These core words are used to enable communication across a range of activities, developing the concept of PODD and habit aided language.",
+            dimOpacity: 0.80,
+            highlightGridAndTab: true,
+            cardTopPadding: 0
+        ),
+        .init(
+            sceneTitle: "GID3",
+            pageId: 1,
+            text: "Great! let's try to communicate that you don't like something using only the general interaction display!",
+            dimOpacity: 0.80,
+            highlightGridAndTab: false,
+            cardTopPadding: 0
+        )
+    ]
+
+    var generalInteractiveCount: Int { generalInteractiveSteps.count }
 
     // ---- Tutorial PDFs (4) ----
     let tutorialPdfNames = ["TutorialPag1", "TutorialPag2", "TutorialPag3", "TutorialPag4"]

@@ -10,14 +10,19 @@ import SwiftUI
 struct TutorialCard: View {
     let text: String
 
+    var width: CGFloat = 600
+    var height: CGFloat = 125
+    var topPadding: CGFloat = 25
+    var horizontalPadding: CGFloat = 26
+
     var body: some View {
         ZStack {
             Text(text)
                 .font(.system(size: 17, weight: .regular))
                 .foregroundStyle(.black)
                 .multilineTextAlignment(.leading)
-                .frame(width: 600, height: 125, alignment: .leading)
-                .padding(.horizontal, 26)
+                .frame(width: width, height: height, alignment: .leading)
+                .padding(.horizontal, horizontalPadding)
                 .background(
                     RoundedRectangle(cornerRadius: 8)
                         .fill(Color.white.opacity(0.90))
@@ -29,6 +34,6 @@ struct TutorialCard: View {
                 )
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
-        .padding(.top, 25)
+        .padding(.top, topPadding)
     }
 }

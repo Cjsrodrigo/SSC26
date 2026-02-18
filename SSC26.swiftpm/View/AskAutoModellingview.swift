@@ -40,13 +40,13 @@ final class AskAutoRunner: ObservableObject {
 
             // I
             activeTarget = tI
-            await sleep(0.65)
+            await sleep(1.65)
             tapTile(label: "I", vm: vm)
-            withAnimation(.easeInOut(duration: 0.20)) { breadcrumbHighlightedCount = 1 }
+            withAnimation(.easeInOut(duration: 0.50)) { breadcrumbHighlightedCount = 1 }
 
             // Want
             activeTarget = tWant
-            await sleep(0.55)
+            await sleep(1.20)
             tapTile(label: "Want", vm: vm)
             withAnimation(.easeInOut(duration: 0.20)) { breadcrumbHighlightedCount = 2 }
 
@@ -58,7 +58,7 @@ final class AskAutoRunner: ObservableObject {
 
             // Play
             activeTarget = tPlay
-            await sleep(0.55)
+            await sleep(1.6)
             tapTile(label: "Play", vm: vm)
             withAnimation(.easeInOut(duration: 0.20)) { breadcrumbHighlightedCount = 3 }
 
@@ -70,7 +70,7 @@ final class AskAutoRunner: ObservableObject {
 
             // More
             activeTarget = tMore
-            await sleep(0.55)
+            await sleep(1.6)
             tapTile(label: "More", vm: vm)
             withAnimation(.easeInOut(duration: 0.20)) { breadcrumbHighlightedCount = 4 }
 
@@ -185,10 +185,31 @@ struct AskAutoModelingView: View {
                                 let holes = [targetRect, msgRect].compactMap { $0 }
 
                                 ZStack {
+                                    let isTabTarget: Bool = {
+                                        guard let t = runner.activeTarget else { return false }
+                                        if case .tab = t { return true }
+                                        return false
+                                    }()
+
                                     SpotlightMask(
-                                        holes: holes,
-                                        strokeRect: targetRect
+                                        holes: isTabTarget ? ([msgRect].compactMap { $0 }) : holes,
+                                        strokeRect: isTabTarget ? nil : targetRect,
+                                        dimOpacity: 0.90,
+                                        cornerRadius: 8,
+                                        holePadding: 0,
+                                        strokeWidth: 3,
+                                        strokeColor: .white,
+                                        customHole: (isTabTarget && targetRect != nil)
+                                            ? (rect: targetRect!,
+                                               tl: 15, tr: 15, bl: 0, br: 0)
+                                            : nil,
+                                        customStroke: (isTabTarget && targetRect != nil)
+                                            ? (rect: targetRect!,
+                                               tl: 15, tr: 15, bl: 0, br: 0)
+                                            : nil
                                     )
+
+                                    
 
                                     // ✅ desenha o tile por cima do dim (agora targetRect existe via fallback)
                                     if let r = targetRect,

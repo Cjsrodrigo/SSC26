@@ -53,33 +53,37 @@ struct SpotlightTutorialScene: View {
                         let rects: [CGRect] = cfg.holes.compactMap { t in
                             anchors[t].map { proxy[$0] }
                         }
-                        
+
                         let strokeRect: CGRect? = cfg.stroke.flatMap { t in
                             anchors[t].map { proxy[$0] }
                         }
-                        
+
                         ZStack {
                             SpotlightMask(
                                 holes: rects,
                                 strokeRect: strokeRect,
                                 dimOpacity: cfg.dimOpacity,
-                                cornerRadius: 8, holePadding: 0,
+                                cornerRadius: 8,
+                                holePadding: 0,
                                 strokeWidth: 3,
                                 strokeColor: .white
                             )
-                            
+
                             TutorialCard(text: cfg.text)
-                            //  .frame(width: 640, height: 90)
-               //                 .position(x: proxy.size.width * 0.50, y: 170)
-                            
+                            // se quiser controlar posição/tamanho:
+                            // .frame(width: 640, height: 90)
+                            // .position(x: proxy.size.width * 0.50, y: 170)
                         }
                     }
-                    
-                    Button(action: onNext) { Image("NextButton") }
-                        .padding(28)
-                        .shadow(radius: 2, y: 4)
                 }
                 .ignoresSafeArea()
+
+            // ✅ Botão fora do overlay — fica igual em todas as telas
+            Button(action: onNext) { Image("NextButton") }
+                .padding(28)
+                .shadow(radius: 2, y: 4)
         }
+        .ignoresSafeArea()
     }
+
 }

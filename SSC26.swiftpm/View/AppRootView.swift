@@ -45,13 +45,21 @@ struct AppRootView: View {
                 )
 
             // ✅ PDFs do GID (GID1..3)
+//            case .generalInteractive(let step):
+//                let names = flow.gidPdfNames
+//                PDFScene(
+//                    pdfNameNoExt: names[min(step, names.count - 1)],
+//                    onNext: { flow.nextGeneralInteractive() }
+//                )
+
             case .generalInteractive(let step):
-                let names = flow.gidPdfNames
-                PDFScene(
-                    pdfNameNoExt: names[min(step, names.count - 1)],
+                let steps = flow.generalInteractiveSteps
+                GeneralInteractiveScene(
+                    cfg: steps[min(step, steps.count - 1)],
                     onNext: { flow.nextGeneralInteractive() }
                 )
 
+                
             // ✅ missão: montar "I don't like it"
             case .refuseChallenge:
                 PhraseChallengeView(
