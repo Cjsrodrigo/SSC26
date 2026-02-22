@@ -9,12 +9,42 @@ import SwiftUI
 
 @MainActor
 final class AppFlowViewModel: ObservableObject {
+
+    // MARK: - Current route
     @Published var route: AppRoute = .intro(step: 0)
 
-//    // ---- GID PDFs ----
-//    let generalInteractiveCount = 3
-//    let gidPdfNames = ["GID1", "GID2", "GID3"]
-    // ---- GID (telas reais) ----
+    // MARK: - (1) Intro (Text cards)
+    let introCards: [TextCardConfig] = [
+        .init(
+            text: "Communication is part of human essence, we continuously find different ways to express ourselves. Augmentative and alternative communication (AAC) is a range of tools and techniques that support or replace spoken communication",
+            dimOpacity: 0.90
+        ),
+        .init(
+            text: "Using symbols to aid communication is one of the most used forms of AAC.",
+            dimOpacity: 0.90
+        ),
+        .init(
+            text: "Nearly 100 million people around the globe have the need to use AAC.",
+            dimOpacity: 0.90
+        ),
+        .init(
+            text: " You’ll learn the basics of AAC usage by watching language modeling and completing 2 quick missions.",
+            dimOpacity: 0.90
+        )
+    ]
+
+    // MARK: - (2) Ask flow
+    let askIntroCard: TextCardConfig = .init(
+        text: "I'll do this one by modelling it, to show you how to build phrases, watch it closely, the next challenge is up to you.",
+        dimOpacity: 0.90
+    )
+
+    let askAfterBreadcrumbCard: TextCardConfig = .init(
+        text: "Playing is so fun, but it's time to go back to class, how about learning more about this method?\n                 🌟",
+        dimOpacity: 0.90
+    )
+
+    // MARK: - (3) GID (General Interactive Display) screens (3)
     let generalInteractiveSteps: [GeneralInteractiveStepConfig] = [
         .init(
             sceneTitle: "GID1",
@@ -27,7 +57,7 @@ final class AppFlowViewModel: ObservableObject {
         .init(
             sceneTitle: "GID2",
             pageId: 2,
-            text: "These core words are used to enable communication across a range of activities, developing the concept of PODD and habit aided language.",
+            text: "These core words are used to enable communication across a range of activities and habit aided language.",
             dimOpacity: 0.80,
             highlightGridAndTab: true,
             cardTopPadding: 0
@@ -44,50 +74,7 @@ final class AppFlowViewModel: ObservableObject {
 
     var generalInteractiveCount: Int { generalInteractiveSteps.count }
 
-    // ---- Tutorial PDFs (4) ----
-    let tutorialPdfNames = ["TutorialPag1", "TutorialPag2", "TutorialPag3", "TutorialPag4"]
-
-    // ---- Final text cards (4) ----
-    // ✅ você edita os textos aqui
-    let postLikeAppleCards: [TextCardConfig] = [
-        .init(text: "You did it! \n 🌟🌟🌟 \n You were able to communicate using three communicative functions. Requested, refused and commented on something and learn PODD logic.", dimOpacity: 0.90),
-        .init(text: "Communication is more than words, it’s choice and independence. AAC and PODD help people express needs, feelings and ideas when speech is hard. \n Modeling builds connection, when learning it inclusion becomes real at school, at home, and everywhere.", dimOpacity: 0.90),
-        .init(text: "We can never really know what a person is capable of until we provide them the opportunity to learn and show us. \n (Gayle Porter, 2009). ", dimOpacity: 0.90),
-        .init(text: "Everyone should have the right to be heard \n This is just the beginning. Now you’re free to explore and express anything.", dimOpacity: 0.90)
-    ]
-
-    // ---- Intro cards ----
-    let introCards: [TextCardConfig] = [
-        .init(
-            text: "PODD is a type of augmentative and alternative communication that helps people communicate using organized vocabulary, promoting autonomy through functional and broad language to everyone who needs support to express themselves.",
-            dimOpacity: 0.90
-        ),
-        .init(
-            text: "The Programmatic Organization Dynamic Display is regognized as one of the most important and emerging methodologies of AAC.",
-            dimOpacity: 0.90
-        ),
-        .init(
-            text: "Nearly 100 million people around the globe have the need to use AAC.\nBeukelman & Light, 2020.",
-            dimOpacity: 0.90
-        ),
-        .init(
-            text: "You’ll learn the basics of Programmatic Organization Dynamic Display (PODD) by watching modeling and completing 2 quick missions.",
-            dimOpacity: 0.90
-        )
-    ]
-
-    // ---- Ask flow ----
-    let askIntroCard: TextCardConfig = .init(
-        text: "I'll do this one by modelling it, to show you how to build phrases, watch it closely, the next challenge is up to you.",
-        dimOpacity: 0.90
-    )
-
-    let askAfterBreadcrumbCard: TextCardConfig = .init(
-        text: "Playing is so fun, but it's time to go back to class, how about learning more about this PODD?\n🌟",
-        dimOpacity: 0.90
-    )
-
-    // ---- Challenges ----
+    // MARK: - (4) Challenge 1: "I don't like it"
     let refuseChallengeCfg = PhraseChallengeConfig(
         title: "Tap to say it",
         startPageId: 1,
@@ -96,15 +83,7 @@ final class AppFlowViewModel: ObservableObject {
         words: ["I", "Don't", "Like", "It"]
     )
 
-    let likeAppleChallengeCfg = PhraseChallengeConfig(
-        title: "Tap to say it",
-        startPageId: 1,
-        allowedTileLabels: ["I", "Like", "Apple"],
-        expectedMessageNormalized: "i like apple",
-        words: ["I", "Like", "Apple"]
-    )
-
-    // ---- Tutorials pós-refuse ----
+    // MARK: - (5) Tutorials after Challenge 1
     let refuseTutMsgBoxCfg = SpotlightTutorialConfig(
         pageId: 1,
         text: "Awesome, that's it! This is where your speech will be shown",
@@ -121,27 +100,91 @@ final class AppFlowViewModel: ObservableObject {
         stroke: nil
     )
 
+    // MARK: - (6) Tutorial pages (4) — Play 3 -> Food 4 -> Feelings 5 -> Body 6
+    let tutorialPageSteps: [TutorialPagesStepConfig] = [
+        .init(
+            sceneTitle: "TutorialPag1",
+            pageId: 3, // Play 3
+            text: "You will have pages representing different aspects of your daily life",
+            dimOpacity: 0.90
+        ),
+        .init(
+            sceneTitle: "TutorialPag2",
+            pageId: 4, // Food & Drink 4
+            text: "These are often customizable to attend the user's personal life",
+            dimOpacity: 0.90
+        ),
+        .init(
+            sceneTitle: "TutorialPag3",
+            pageId: 5, // Feelings 5
+            text: "In this one for example, you can express your feelings a little better",
+            dimOpacity: 0.90
+        ),
+        .init(
+            sceneTitle: "TutorialPag4",
+            pageId: 6, // Body 6
+            text: "You're doing great, now let's try to speak all by yourself",
+            dimOpacity: 0.90
+        )
+    ]
+
+    // MARK: - (7) Challenge 2: "I like Apple"
+    let likeAppleChallengeCfg = PhraseChallengeConfig(
+        title: "Tap to say it",
+        startPageId: 1,
+        allowedTileLabels: ["I", "Like", "Apple"],
+        expectedMessageNormalized: "i like apple",
+        words: ["I", "Like", "Apple"]
+    )
+
+    // MARK: - (8) Final text cards (4)
+    let postLikeAppleCards: [TextCardConfig] = [
+        .init(
+            text: "You did it!\n🌟🌟🌟\nYou were able to communicate using three communicative functions. Requested, refused and commented on something and learn AAC logic.",
+            dimOpacity: 0.90
+        ),
+        .init(
+            text: "Communication is more than words, it’s choice and independence. AAC and help people express needs, feelings and ideas when speech is hard.\nModeling builds connection, when learning it inclusion becomes real at school, at home, and everywhere.",
+            dimOpacity: 0.90
+        ),
+        .init(
+            text: "We can never really know what a person is capable of until we provide them the opportunity to learn and show us.\n\n(Gayle Porter, 2009).",
+            dimOpacity: 0.90
+        ),
+        .init(
+            text: "Everyone should have the right to be heard \n\nqhis is just the beginning. Now you’re free to explore and express anything.",
+            dimOpacity: 0.90
+        )
+    ]
+
     // -------------------------
-    // MARK: - Flow actions
+    // MARK: - Flow actions (in order)
     // -------------------------
+
+    // (1) Intro -> IntroImage -> AskIntroCard
     func nextIntro() {
         switch route {
         case .intro(let step):
-            if step < introCards.count - 1 { route = .intro(step: step + 1) }
-            else { route = .introImage }
+            if step < introCards.count - 1 {
+                route = .intro(step: step + 1)
+            } else {
+                route = .introImage
+            }
+
         case .introImage:
             route = .askIntroCard
+
         default:
             break
         }
     }
 
+    // (2) Ask flow
     func nextAfterAskIntroCard() { route = .askAutoModeling }
     func nextAfterAskAutoModeling() { route = .askAfterBreadcrumb }
-    func nextAfterAskAfterBreadcrumb() { startGeneralInteractive() }
+    func nextAfterAskAfterBreadcrumb() { route = .generalInteractive(step: 0) }
 
-    func startGeneralInteractive() { route = .generalInteractive(step: 0) }
-
+    // (3) GID
     func nextGeneralInteractive() {
         guard case .generalInteractive(let step) = route else { return }
         if step < generalInteractiveCount - 1 {
@@ -151,26 +194,25 @@ final class AppFlowViewModel: ObservableObject {
         }
     }
 
+    // (4) Challenge 1 -> Tutorials
     func nextAfterRefuseChallenge() { route = .refuseTutorialMessageBox }
     func nextAfterRefuseTutorialMessageBox() { route = .refuseTutorialTopControls }
-
-    // ✅ depois do Top Controls, começam os 4 PDFs TutorialPag1..4
     func nextAfterRefuseTutorialTopControls() { route = .tutorialPdf(step: 0) }
 
-    // ✅ avança TutorialPag1..4, depois vai pro último challenge (I like Apple)
+    // (5) Tutorial pages -> Challenge 2
     func nextTutorialPdf() {
         guard case .tutorialPdf(let step) = route else { return }
-        if step < tutorialPdfNames.count - 1 {
+        if step < tutorialPageSteps.count - 1 {
             route = .tutorialPdf(step: step + 1)
         } else {
             route = .likeAppleChallenge
         }
     }
 
-    // ✅ depois do Like Apple, inicia as 4 telas de texto (TextCardScene)
+    // (6) Challenge 2 -> Final text
     func nextAfterLikeAppleChallenge() { route = .postLikeAppleText(step: 0) }
 
-    // ✅ avança as 4 telas de texto, depois libera modo livre
+    // (7) Final text -> Free board
     func nextPostLikeAppleText() {
         guard case .postLikeAppleText(let step) = route else { return }
         if step < postLikeAppleCards.count - 1 {

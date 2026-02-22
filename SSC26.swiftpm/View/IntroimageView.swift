@@ -17,13 +17,19 @@ struct IntroImageView: View {
             // Troque "YourIntroImage" pelo nome do seu asset
             Image("Storyboard")
                 .resizable()
-                .scaledToFit()
-                .padding(24)
+                .scaledToFill()
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .clipped()
+              //  .ignoresSafeArea()
 
-            Button(action: onNext) {
+            Button {
+                AudioSystem.shared.playSFX("ApplePCClick")
+                onNext()
+            } label: {
                 Image("NextButton")
-               
             }
+            .buttonStyle(PressableButtonStyle())
+
             .padding(21)
         }
     }

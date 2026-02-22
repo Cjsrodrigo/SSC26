@@ -8,7 +8,7 @@
     import SwiftUI
 
     struct TileView: View {
-        let tile: PoddTile
+        let tile: BookTile
         let size: CGFloat
 
         var body: some View {

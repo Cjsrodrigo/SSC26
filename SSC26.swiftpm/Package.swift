@@ -27,10 +27,7 @@ let package = Package(
                 .phone
             ],
             supportedInterfaceOrientations: [
-                .portrait,
                 .landscapeRight,
-                .landscapeLeft,
-                .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
             appCategory: .education
         )
@@ -40,8 +37,8 @@ let package = Package(
             name: "AppModule",
             path: ".",
             resources: [
-                .process("Resources")
-            ]
+                           .process("Resources")
+                       ]
         )
     ],
     swiftLanguageVersions: [.version("6")]

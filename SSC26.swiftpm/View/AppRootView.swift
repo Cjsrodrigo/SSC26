@@ -81,11 +81,17 @@ struct AppRootView: View {
                     onNext: { flow.nextAfterRefuseTutorialTopControls() }
                 )
 
-            // ✅ PDFs TutorialPag1..4
+//            // ✅ PDFs TutorialPag1..4
+//            case .tutorialPdf(let step):
+//                let names = flow.tutorialPdfNames
+//                PDFScene(
+//                    pdfNameNoExt: names[min(step, names.count - 1)],
+//                    onNext: { flow.nextTutorialPdf() }
+//                )
             case .tutorialPdf(let step):
-                let names = flow.tutorialPdfNames
-                PDFScene(
-                    pdfNameNoExt: names[min(step, names.count - 1)],
+                let steps = flow.tutorialPageSteps
+                TutorialPagesScene(
+                    cfg: steps[min(step, steps.count - 1)],
                     onNext: { flow.nextTutorialPdf() }
                 )
 

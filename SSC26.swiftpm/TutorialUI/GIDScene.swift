@@ -28,7 +28,7 @@
                       .allowsHitTesting(false)
                       .onAppear { board.currentPageId = cfg.pageId }
                       .onChange(of: cfg.pageId) { _, newPage in
-                        withAnimation(.easeInOut(duration: 0.25)) {
+                        withAnimation(.easeInOut(duration: 0)) {
                           board.currentPageId = newPage
                         }
                       }
@@ -83,8 +83,8 @@
                                       holePadding: 0,
                                       strokeWidth: 3,
                                       strokeColor: .white,
-                                      customHole: tabRect.map { (rect: $0, tl: 15, tr: 15, bl: 0, br: 0) },
-                                      customStroke: tabRect.map { (rect: $0, tl: 15, tr: 15, bl: 0, br: 0) }
+                                      customHole: tabRect.map { (rect: $0, tl: 18, tr: 18, bl: 6, br: 6) },
+                                      customStroke: tabRect.map { (rect: $0, tl: 18, tr: 18, bl: 6, br: 6) }
                                   )
 
                                   // ✅ desenhar tiles por cima do dim usando o mesmo rect calculado
@@ -103,7 +103,8 @@
 
                             TutorialCard(
                               text: cfg.text,
-                              width: 600,
+                              maxWidth: 600,
+                              minWidth: 320,
                               height: 72,
                               topPadding: 0
                             )
@@ -117,7 +118,14 @@
                     // Fallback on earlier versions
                 }
 
-                Button(action: onNext) { Image("NextButton") }
+                Button {
+                    AudioSystem.shared.playSFX("ApplePCClick")
+                    onNext()
+                } label: {
+                    Image("NextButton")
+                }
+                .buttonStyle(PressableButtonStyle())
+
                     .padding(28)
                     .shadow(radius: 2, y: 4)
             }

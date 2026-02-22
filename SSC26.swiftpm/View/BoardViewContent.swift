@@ -75,6 +75,7 @@ struct BoardViewContent: View {
                 .ignoresSafeArea(.container, edges: .horizontal)
                 .padding(.top, 16)
 
+            
                 // Content columns
                 HStack(alignment: .center, spacing: 16) {
 
@@ -271,7 +272,7 @@ struct BoardViewContent: View {
                     VStack(spacing: 16) {
                         HStack(spacing: 22) {
                             Button {
-                                vm.speech.speak("yes")
+                                vm.tts.speak("yes")
                                 vm.tokens.append("yes")
                                 vm.isYesNoPresented = false
                             } label: {
@@ -290,7 +291,7 @@ struct BoardViewContent: View {
                             }
 
                             Button {
-                                vm.speech.speak("no")
+                                vm.tts.speak("no")
                                 vm.tokens.append("no")
                                 vm.isYesNoPresented = false
                             } label: {

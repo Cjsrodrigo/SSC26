@@ -1,5 +1,5 @@
 //
-//  PoddTile.swift
+//  BookTile.swift
 //  SSC26
 //
 //  Created by Rodrigo Cont on 09/02/26.
@@ -17,7 +17,7 @@ enum TileKind: Equatable {
     case action(Actionkind)
 }
 
-struct PoddTile: Identifiable, Equatable {
+struct BookTile: Identifiable, Equatable {
     let id = UUID()
 
     let label: String

@@ -1,40 +1,40 @@
 //
-//  SpotlightTutorialScene.swift
+//  TutorialPAgesScene.swift
 //  SSC26
 //
-//  Created by Rodrigo Cont on 15/02/26.
+//  Created by Rodrigo Cont on 18/02/26.
 //
+
 import SwiftUI
 
-struct SpotlightTutorialConfig {
+struct TutorialPagesStepConfig {
+    let sceneTitle: String
     let pageId: Int
     let text: String
     let dimOpacity: Double
-    let holes: [GuidedTarget]
-    let stroke: GuidedTarget?
 }
 
-struct SpotlightTutorialScene: View {
-    let cfg: SpotlightTutorialConfig
+struct TutorialPagesScene: View {
+    let cfg: TutorialPagesStepConfig
     let onNext: () -> Void
 
     @StateObject private var board = BoardViewModel(pages: BoardDefinition.makePages())
 
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
+
             BoardSpotlightOverlay(
                 board: board,
                 pageId: cfg.pageId,
-                mode: .targets(holes: cfg.holes, stroke: cfg.stroke),
+                mode: .allTilesAndTab,
                 text: cfg.text,
                 dimOpacity: cfg.dimOpacity,
-                  cardMaxWidth: 600,
-                  cardMinWidth: 120,
-                  cardHeight: 125,
-                cardTopPadding: 20,
-                cardY: nil// ajuste se quiser
-            )            
-
+                cardMaxWidth: 600,
+                cardMinWidth: 320,
+                cardHeight: 72,
+                cardTopPadding: 0,
+                cardY: 120
+            )
 
             Button {
                 AudioSystem.shared.playSFX("ApplePCClick")
@@ -47,7 +47,7 @@ struct SpotlightTutorialScene: View {
                 .padding(28)
                 .shadow(radius: 2, y: 4)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
         .ignoresSafeArea()
     }
 }
+

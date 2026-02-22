@@ -7,8 +7,11 @@ struct MyApp: App {
 
     var body: some Scene {
         WindowGroup {
-            AppRootView()
             
+            AppRootView()
+                .task { @MainActor in
+                                AudioSystem.shared.warmUp()
+                            }
         }
     }
 }

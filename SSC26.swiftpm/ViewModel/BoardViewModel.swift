@@ -22,16 +22,16 @@ final class BoardViewModel: ObservableObject {
     /// Se não for nil, só permite taps em tiles com esses labels.
     var allowedTileLabels: Set<String>? = nil
     /// Callback quando tocar em tile inválido (pra mostrar toast/som/haptic).
-    var onInvalidTileTap: ((PoddTile) -> Void)? = nil
+    var onInvalidTileTap: ((BookTile) -> Void)? = nil
 
-    let speech = SpeechService()
-    let pages: [PoddPage]
+    let tts = SpeechService.shared
+    let pages: [BookPage]
 
-    init(pages: [PoddPage]) {
+    init(pages: [BookPage]) {
         self.pages = pages
     }
 
-    var currentPage: PoddPage {
+    var currentPage: BookPage {
         pages.first(where: { $0.id == currentPageId }) ?? pages[0]
     }
 
@@ -39,8 +39,11 @@ final class BoardViewModel: ObservableObject {
         tokens.joined(separator: " ")
     }
 
+    var tileTapGuard: ((String) -> Bool)? = nil
+
+    
     /// ✅ Use isso no BoardViewContent no lugar de tapTile(tile)
-    func tryTapTile(_ tile: PoddTile) {
+    func tryTapTile(_ tile: BookTile) {
         if let allowed = allowedTileLabels, !allowed.contains(tile.label) {
             onInvalidTileTap?(tile)
             return
@@ -48,9 +51,15 @@ final class BoardViewModel: ObservableObject {
         tapTile(tile)
     }
 
-    func tapTile(_ tile: PoddTile) {
-        speech.speak(tile.speakText)
+    func tapTile(_ tile: BookTile) {
+        tts.speak(tile.speakText)
 
+        if let guardFn = tileTapGuard, guardFn(tile.label) == false {
+            onInvalidTileTap?(tile)
+            return
+        }
+
+        
         switch tile.kind {
         case .word:
             if let t = tile.appendText, !t.isEmpty {
@@ -69,7 +78,7 @@ final class BoardViewModel: ObservableObject {
     }
 
     func speakMessage() {
-        speech.speak(messageText)
+        tts.speak(messageText)
     }
 
     func copyMessage() {

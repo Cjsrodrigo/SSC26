@@ -16,9 +16,15 @@ final class AskAutoRunner: ObservableObject {
 
     private var task: Task<Void, Never>?
 
+    
+    
     func start(board vm: BoardViewModel) {
+        
+        
         guard task == nil else { return }
 
+        
+        
         task = Task { @MainActor in
             finished = false
             dimEnabled = true
@@ -39,14 +45,16 @@ final class AskAutoRunner: ObservableObject {
             await sleep(0.20)
 
             // I
+            await sleep(1.20)
             activeTarget = tI
-            await sleep(1.65)
+            await sleep(0.5)
             tapTile(label: "I", vm: vm)
-            withAnimation(.easeInOut(duration: 0.50)) { breadcrumbHighlightedCount = 1 }
+            withAnimation(.easeInOut(duration: 0.15)) { breadcrumbHighlightedCount = 1 }
+            await sleep(4.3)
 
             // Want
             activeTarget = tWant
-            await sleep(1.20)
+            await sleep(1.6)
             tapTile(label: "Want", vm: vm)
             withAnimation(.easeInOut(duration: 0.20)) { breadcrumbHighlightedCount = 2 }
 
@@ -121,7 +129,17 @@ struct AskAutoModelingView: View {
             if #available(iOS 17.0, *) {
                 BoardViewContent(vm: board)
                     .allowsHitTesting(false)
-                    .onAppear { runner.start(board: board) }
+                    .onAppear {
+                        
+                        // ✅ aquece para essa tela também
+                                AudioSystem.shared.warmUp()
+                                SpeechService.shared.warmUp()
+
+                                // ✅ opcional: “prime” do TTS (explico abaixo)
+                                SpeechService.shared.primeForFirstSpeak()
+                        
+                        runner.start(board: board)
+                    }
                     .onDisappear { runner.cancel() }
                     .onChange(of: runner.finished) { _, done in
                         guard done else { return }
@@ -135,14 +153,20 @@ struct AskAutoModelingView: View {
                         GeometryReader { proxy in
                             let words = ["I", "Want", "Play", "More"]
 
+                            let msgRect: CGRect? = anchors[GuidedTarget.messageBox].map { proxy[$0] }
+
+                            let hudWidth: CGFloat = msgRect?.width ?? 360
+                            let hudX: CGFloat = msgRect?.midX ?? (proxy.size.width * 0.5)
+
                             let hud = ChallengeHUD(
                                 title: "Just watch: Ask",
                                 words: words,
                                 highlightedCount: runner.breadcrumbHighlightedCount
+                                // flashError: false (pode omitir)
+                                , width: hudWidth
                             )
-                            .position(x: proxy.size.width * 0.388, y: 175)
+                            .position(x: hudX, y: 175)
 
-                            let msgRect: CGRect? = anchors[GuidedTarget.messageBox].map { proxy[$0] }
 
                             // ✅ Calcula o rect do target SEM mutação (ViewBuilder-safe)
                             let targetRect: CGRect? = {
@@ -167,6 +191,7 @@ struct AskAutoModelingView: View {
                                 let gridSpacing: CGFloat = 22
                                 let rowSpacing: CGFloat = 16
                                 let cols = 6
+                                
 
                                 guard let idx = board.currentPage.tiles.firstIndex(where: { $0.label == label }) else {
                                     return nil
@@ -180,9 +205,14 @@ struct AskAutoModelingView: View {
 
                                 return CGRect(x: x, y: y, width: tileSize, height: tileSize)
                             }()
+                            
+                            
+
 
                             if runner.dimEnabled {
                                 let holes = [targetRect, msgRect].compactMap { $0 }
+                                
+                               
 
                                 ZStack {
                                     let isTabTarget: Bool = {
@@ -191,9 +221,15 @@ struct AskAutoModelingView: View {
                                         return false
                                     }()
 
+                                    let isTileTarget: Bool = {
+                                        guard let t = runner.activeTarget else { return false }
+                                        if case .tile = t { return true }
+                                        return false
+                                    }()
+                                    
                                     SpotlightMask(
                                         holes: isTabTarget ? ([msgRect].compactMap { $0 }) : holes,
-                                        strokeRect: isTabTarget ? nil : targetRect,
+                                        strokeRect: (isTabTarget || isTileTarget) ? nil : targetRect, 
                                         dimOpacity: 0.90,
                                         cornerRadius: 8,
                                         holePadding: 0,
@@ -201,11 +237,11 @@ struct AskAutoModelingView: View {
                                         strokeColor: .white,
                                         customHole: (isTabTarget && targetRect != nil)
                                             ? (rect: targetRect!,
-                                               tl: 15, tr: 15, bl: 0, br: 0)
+                                               tl: 18, tr: 18, bl: 6, br: 6)
                                             : nil,
                                         customStroke: (isTabTarget && targetRect != nil)
                                             ? (rect: targetRect!,
-                                               tl: 15, tr: 15, bl: 0, br: 0)
+                                               tl: 18, tr: 18, bl: 6, br: 6)
                                             : nil
                                     )
 
