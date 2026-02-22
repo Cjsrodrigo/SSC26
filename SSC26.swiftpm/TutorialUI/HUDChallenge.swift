@@ -22,21 +22,15 @@ struct ChallengeHUD: View {
                 .foregroundStyle(.black)
                 .font(.system(size: 12, weight: .semibold))
 
-            VStack(spacing: 3) {
-                Text(title)
-                    .foregroundStyle(.black)
-
-                    .font(.system(size: 12, weight: .semibold))
-
                 BreadcrumbText(
                     words: words,
                     highlightedCount: highlightedCount,
                     flashError: flashError
                 )
-            }
+            
         }
         .frame(width: width)                 // ✅ sem fallback fixo aqui
-        .padding(.vertical, 3)
+        .padding(.vertical, 6)
         .background(Color.white.opacity(0.90))
         .clipShape(RoundedRectangle(cornerRadius: 8))
 //        .overlay(

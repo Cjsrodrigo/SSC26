@@ -23,16 +23,16 @@
             BookPage(
                 id: 1,
                 title: "Actions 1",
-                tabColor: .white,
+                tabColor: Color(hex: "#E6E6E6"),
                 tiles: [
-                    wordTile("I",     append: "I",      speak: "i",      icon: "I",     border: .pink),
-                    wordTile("It",    append: "it",     speak: "it",     icon: "It",    border: .red),
+                    wordTile("I",     append: "I",      speak: "i",      icon: "I",     border: Color(hex: "#990099")),
+                    wordTile("It",    append: "it",     speak: "it",     icon: "It",    border: Color(hex: "#990099")),
                     wordTile("Like",  append: "like",   speak: "like",   icon: "Like",  border: .green),
                     wordTile("Go",    append: "go",     speak: "go",     icon: "Go",    border: .green),
                     wordTile("Stop",  append: "stop",   speak: "stop",   icon: "Stop",  border: .green),
-                    wordTile("More",  append: "more",   speak: "more",   icon: "More",  border: .purple),
+                    wordTile("More",  append: "more",   speak: "more",   icon: "More",  border: Color(hex: "#E6E6E6")),
                     
-                    wordTile("You",   append: "you",    speak: "you",    icon: "You",   border: .pink),
+                    wordTile("You",   append: "you",    speak: "you",    icon: "You",   border: Color(hex: "#990099")),
                     wordTile("Don't", append: "don't",  speak: "don't",  icon: "Dont",  border: .red),
                     wordTile("Want",  append: "want",   speak: "want",   icon: "Want",  border: .green),
                     wordTile("Help",  append: "help",   speak: "help",   icon: "Help",  border: .green),
@@ -46,7 +46,7 @@
             BookPage(
                 id: 2,
                 title: "Actions 2",
-                tabColor: .gray,
+                tabColor: Color(hex: "#E6E6E6"),
                 tiles: [
                     wordTile("Drink",       append: "drink",       speak: "drink",       icon: "Drink",     border: .green),
                     wordTile("Play",        append: "play",        speak: "play",        icon: "Play",      border: .green),
@@ -69,8 +69,7 @@
             BookPage(
                 id: 3,
                 title: "Play 3",
-                tabColor: .red,
-                tiles: [
+                tabColor: Color(hex: "#FF6257"),                tiles: [
                     wordTile("Draw",       append: "draw",       speak: "draw",       icon: "Draw",       border: .green),
                     wordTile("Play",       append: "play",       speak: "play",       icon: "Play",       border: .green),
                     wordTile("Music",      append: "music",      speak: "music",      icon: "Music",      border: .yellow),

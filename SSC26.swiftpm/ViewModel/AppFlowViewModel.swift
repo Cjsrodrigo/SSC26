@@ -16,7 +16,7 @@ final class AppFlowViewModel: ObservableObject {
     // MARK: - (1) Intro (Text cards)
     let introCards: [TextCardConfig] = [
         .init(
-            text: "Communication is part of human essence, we continuously find different ways to express ourselves. Augmentative and alternative communication (AAC) is a range of tools and techniques that support or replace spoken communication",
+            text: "Communication is part of human essence, we continuously find different ways to express ourselves. Augmentative and alternative communication(AAC) is a range of tools and techniques that support or replace spoken communication",
             dimOpacity: 0.90
         ),
         .init(
@@ -24,11 +24,11 @@ final class AppFlowViewModel: ObservableObject {
             dimOpacity: 0.90
         ),
         .init(
-            text: "Nearly 100 million people around the globe have the need to use AAC.",
+            text: "Nearly 100 million people around the globe have the need to use AAC.\nBeukelman & Light, Citation2020",
             dimOpacity: 0.90
         ),
         .init(
-            text: " You’ll learn the basics of AAC usage by watching language modeling and completing 2 quick missions.",
+            text: "You’ll learn the basics of AAC usage by watching language modeling and completing 2 quick missions.",
             dimOpacity: 0.90
         )
     ]
@@ -50,7 +50,7 @@ final class AppFlowViewModel: ObservableObject {
             sceneTitle: "GID1",
             pageId: 1,
             text: "In the first two pages you will find a general interaction display, with core words.",
-            dimOpacity: 0.80,
+            dimOpacity: 0.90,
             highlightGridAndTab: true,
             cardTopPadding: 0
         ),
@@ -62,31 +62,31 @@ final class AppFlowViewModel: ObservableObject {
             highlightGridAndTab: true,
             cardTopPadding: 0
         ),
-        .init(
-            sceneTitle: "GID3",
-            pageId: 1,
-            text: "Great! let's try to communicate that you don't like something using only the general interaction display!",
-            dimOpacity: 0.80,
-            highlightGridAndTab: false,
-            cardTopPadding: 0
-        )
+//        .init(
+//            sceneTitle: "GID3",
+//            pageId: 1,
+//            text: "Great! let's try to communicate that you don't like something using only the general interaction display!",
+//            dimOpacity: 0.90,
+//            highlightGridAndTab: false,
+//            cardTopPadding: 0
+//        )
     ]
 
     var generalInteractiveCount: Int { generalInteractiveSteps.count }
 
-    // MARK: - (4) Challenge 1: "I don't like it"
-    let refuseChallengeCfg = PhraseChallengeConfig(
-        title: "Tap to say it",
-        startPageId: 1,
-        allowedTileLabels: ["I", "Don't", "Like", "It"],
-        expectedMessageNormalized: "i don't like it",
-        words: ["I", "Don't", "Like", "It"]
-    )
+//    // MARK: - (4) Challenge 1: "I don't like it"
+//    let refuseChallengeCfg = PhraseChallengeConfig(
+//        title: "Tap to say it",
+//        startPageId: 1,
+//        allowedTileLabels: ["I", "Don't", "Like", "It"],
+//        expectedMessageNormalized: "i don't like it",
+//        words: ["I", "Don't", "Like", "It"]
+//    )
 
     // MARK: - (5) Tutorials after Challenge 1
     let refuseTutMsgBoxCfg = SpotlightTutorialConfig(
         pageId: 1,
-        text: "Awesome, that's it! This is where your speech will be shown",
+        text: "This is where your speech will be shown",
         dimOpacity: 0.90,
         holes: [.messageBox],
         stroke: .messageBox
@@ -94,7 +94,7 @@ final class AppFlowViewModel: ObservableObject {
 
     let refuseTutTopControlsCfg = SpotlightTutorialConfig(
         pageId: 1,
-        text: "You can also repeat it out loud, copy it to wherever you want, or erase it",
+        text: "You can also repeat it out loud, copy to wherever you want, or erase it",
         dimOpacity: 0.90,
         holes: [.speakButton, .messageBox, .copyButton, .eraseButton],
         stroke: nil
@@ -140,7 +140,7 @@ final class AppFlowViewModel: ObservableObject {
     // MARK: - (8) Final text cards (4)
     let postLikeAppleCards: [TextCardConfig] = [
         .init(
-            text: "You did it!\n🌟🌟🌟\nYou were able to communicate using three communicative functions. Requested, refused and commented on something and learn AAC logic.",
+            text: "You did it! \n🌟🌟🌟\nYou were able to communicate using three communicative functions. Requested, refused and commented on something and learn AAC logic.",
             dimOpacity: 0.90
         ),
         .init(
@@ -190,7 +190,7 @@ final class AppFlowViewModel: ObservableObject {
         if step < generalInteractiveCount - 1 {
             route = .generalInteractive(step: step + 1)
         } else {
-            route = .refuseChallenge
+            route = .refuseTutorialMessageBox
         }
     }
 

@@ -15,7 +15,7 @@ enum AppRoute: Equatable {
     case askAutoModeling       // ✅ tutorial automático (Missão Pedir 2)
     case askAfterBreadcrumb
     case generalInteractive(step: Int)
-    case refuseChallenge
+  //  case refuseChallenge
     case refuseChallengeIntro
 
     case refuseTutorialMessageBox

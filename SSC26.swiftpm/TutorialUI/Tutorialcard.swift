@@ -49,7 +49,7 @@ struct TutorialCard: View {
                     .fill(Color.white.opacity(0.90))
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.black, lineWidth: 3)
+                            .stroke(Color.black, lineWidth: 2)
                     )
                     .shadow(radius: 2, y: 4)
             )

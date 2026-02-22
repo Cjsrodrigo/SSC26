@@ -38,7 +38,9 @@ struct PhraseChallengeView: View {
                         withAnimation(.easeInOut(duration: 0.2)) {
                             board.currentPageId = cfg.startPageId
                         }
-
+                        
+                        board.sidebarTapGuard = { false }
+                        board.onInvalidSidebarTap = { triggerErrorFlash() }
                         // ✅ trava tiles permitidos
                         board.allowedTileLabels = cfg.allowedTileLabels
 
@@ -69,6 +71,8 @@ struct PhraseChallengeView: View {
                         board.allowedTileLabels = nil
                         board.onInvalidTileTap = nil
                         board.tileTapGuard = nil
+                        board.sidebarTapGuard = nil
+                        board.onInvalidSidebarTap = nil
                     }
                     // ✅ se apagar/limpar, o breadcrumb volta junto
                     .onChange(of: board.tokens) { _, newTokens in
@@ -77,7 +81,7 @@ struct PhraseChallengeView: View {
                             stepIndex = newStep
                         }
                     }
-                    // ✅ ao completar: fala e avança sozinho (1x)
+                    // ✅ ao completar: fala e avança sozinho (1x)x
                     .onChange(of: isCompleted) { _, done in
                         guard done, !didAutoAdvance else { return }
                         didAutoAdvance = true

@@ -29,16 +29,16 @@ struct TextCardScene: View {
             } label: {
                 Image("NextButton")
             }
-            .buttonStyle(PressableButtonStyle())
+       //     .buttonStyle(PressableButtonStyle())
 
             .padding(28)
             .shadow(radius: 2, y: 4)
             
-            GeometryReader { geo in
-                    // exemplo: apontar para o botão Next (canto inferior direito)
-                    let p = CGPoint(x: geo.size.width - 70, y: geo.size.height - 70)
-                    HandGuide(anchor: p, handImageName: "Hand", handSize: 45)
-                }
+//            GeometryReader { geo in
+//                    // exemplo: apontar para o botão Next (canto inferior direito)
+//                    let p = CGPoint(x: geo.size.width - 70, y: geo.size.height - 70)
+//                    HandGuide(anchor: p, handImageName: "Hand", handSize: 45)
+//                }
         }
         .ignoresSafeArea()
     }

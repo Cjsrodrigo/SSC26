@@ -42,7 +42,7 @@ struct TutorialPagesScene: View {
             } label: {
                 Image("NextButton")
             }
-            .buttonStyle(PressableButtonStyle())
+           // .buttonStyle(PressableButtonStyle())
 
                 .padding(28)
                 .shadow(radius: 2, y: 4)

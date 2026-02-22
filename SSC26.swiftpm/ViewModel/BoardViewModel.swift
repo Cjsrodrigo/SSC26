@@ -24,6 +24,9 @@ final class BoardViewModel: ObservableObject {
     /// Callback quando tocar em tile inválido (pra mostrar toast/som/haptic).
     var onInvalidTileTap: ((BookTile) -> Void)? = nil
 
+    var sidebarTapGuard: (() -> Bool)? = nil
+    var onInvalidSidebarTap: (() -> Void)? = nil
+    
     let tts = SpeechService.shared
     let pages: [BookPage]
 
@@ -49,6 +52,14 @@ final class BoardViewModel: ObservableObject {
             return
         }
         tapTile(tile)
+    }
+    
+    func tryTapSidebarAction(_ action: () -> Void) {
+        if let guardFn = sidebarTapGuard, guardFn() == false {
+            onInvalidSidebarTap?()
+            return
+        }
+        action()
     }
 
     func tapTile(_ tile: BookTile) {
@@ -78,9 +89,15 @@ final class BoardViewModel: ObservableObject {
     }
 
     func speakMessage() {
-        tts.speak(messageText)
+        let text = messageText
+        if text.trimmingCharacters(in: .whitespacesAndNewlines).count == 1 {
+            tts.speak(text.lowercased())
+        } else {
+            tts.speak(text)
+        }
     }
 
+    
     func copyMessage() {
 #if canImport(UIKit)
         UIPasteboard.general.string = messageText
@@ -95,4 +112,7 @@ final class BoardViewModel: ObservableObject {
     func clearAll() {
         tokens.removeAll()
     }
+    
+    
+    
 }

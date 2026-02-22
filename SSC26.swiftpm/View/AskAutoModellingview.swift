@@ -50,36 +50,41 @@ final class AskAutoRunner: ObservableObject {
             await sleep(0.5)
             tapTile(label: "I", vm: vm)
             withAnimation(.easeInOut(duration: 0.15)) { breadcrumbHighlightedCount = 1 }
-            await sleep(4.3)
+            await sleep(2.3)
 
             // Want
             activeTarget = tWant
-            await sleep(1.6)
+            await sleep(0.9)
             tapTile(label: "Want", vm: vm)
+            await sleep(0.9)
+
             withAnimation(.easeInOut(duration: 0.20)) { breadcrumbHighlightedCount = 2 }
 
             // Tab 2
             activeTarget = tab2
-            await sleep(0.90)
+            await sleep(1.20)
             withAnimation(.easeInOut(duration: 0.25)) { vm.currentPageId = page2 }
             await sleep(0.30)
 
             // Play
             activeTarget = tPlay
-            await sleep(1.6)
+            await sleep(0.9)
             tapTile(label: "Play", vm: vm)
+            await sleep(0.9)
             withAnimation(.easeInOut(duration: 0.20)) { breadcrumbHighlightedCount = 3 }
 
             // Tab 1
             activeTarget = tab1
-            await sleep(0.90)
+            await sleep(1.20)
             withAnimation(.easeInOut(duration: 0.25)) { vm.currentPageId = page1 }
             await sleep(0.30)
 
             // More
             activeTarget = tMore
-            await sleep(1.6)
+            await sleep(0.8)
             tapTile(label: "More", vm: vm)
+            await sleep(0.9)
+
             withAnimation(.easeInOut(duration: 0.20)) { breadcrumbHighlightedCount = 4 }
 
             // ✅ some o dim e mantém o HUD completo na tela

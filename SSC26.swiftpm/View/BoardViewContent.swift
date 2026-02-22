@@ -42,7 +42,7 @@ struct BoardViewContent: View {
 
     var body: some View {
         ZStack(alignment: .top) {
-            Color(red: 0.60, green: 0.83, blue: 0.86).ignoresSafeArea()
+            Color(hex: "#8CCED7").ignoresSafeArea()
 
             VStack(spacing: 12) {
 
@@ -62,7 +62,7 @@ struct BoardViewContent: View {
                                 .background(p.tabColor)
                                 .clipShape(tabShape)
                                 .overlay(tabShape.stroke(Color.black, lineWidth: 1))
-                                .shadow(radius: 2, x: 4)
+                                .shadow(radius: 2 , x: 4)
                                 .shadow(radius: 2, x: -4)
                         }
                         .anchorPreference(key: GuidedAnchorKey.self, value: .bounds) {
@@ -95,7 +95,9 @@ struct BoardViewContent: View {
                                 }
                                 .foregroundStyle(.black)
                                 .frame(width: tileSize, height: tileSize)
-                                .background(Color.orange.opacity(0.75))
+                               // .background(Color(hex:"#00C70D"))
+                                .background(Color(hex:"#FF985C"))
+                                
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                                 .shadow(radius: 2, y: 4)
                                 .overlay(
@@ -214,7 +216,8 @@ struct BoardViewContent: View {
 
                     // RIGHT COLUMN (sidebar)
                     VStack(spacing: 40) {
-                        Button { vm.currentPageId = 1 } label: {
+                        Button { vm.tryTapSidebarAction {
+                            vm.currentPageId = 1}} label: {
                             VStack(spacing: 6) {
                                 Image("BackToPage1")
                                     .resizable()
@@ -234,7 +237,8 @@ struct BoardViewContent: View {
                             )
                         }
 
-                        Button { vm.isYesNoPresented = true } label: {
+                            Button { vm.tryTapSidebarAction {
+                                vm.isYesNoPresented = true }} label: {
                             VStack(spacing: 6) {
                                 Image("YesNoBoard")
                                     .resizable()
@@ -311,12 +315,12 @@ struct BoardViewContent: View {
                         }
 
                         Button("Close") { vm.isYesNoPresented = false }
-                            .font(.system(size: 13, weight: .regular))
+                            .font(.system(size: 13, weight: .medium))
                             .padding(.top, 6)
                     }
                     .foregroundStyle(.black)
                     .padding(22)
-                    .background(.ultraThinMaterial)
+                    .background(Color(hex: "#8CCED7"))
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                     .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
                 }

@@ -61,11 +61,11 @@ struct AppRootView: View {
 
                 
             // ✅ missão: montar "I don't like it"
-            case .refuseChallenge:
-                PhraseChallengeView(
-                    cfg: flow.refuseChallengeCfg,
-                    onNext: { flow.nextAfterRefuseChallenge() }
-                )
+//            case .refuseChallenge:
+//                PhraseChallengeView(
+//                    cfg: flow.refuseChallengeCfg,
+//                    onNext: { flow.nextAfterRefuseChallenge() }
+//                )
 
             // ✅ tutorial 1: message box
             case .refuseTutorialMessageBox:
