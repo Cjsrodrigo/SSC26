@@ -19,7 +19,9 @@ struct AppRootView: View {
                 TextCardScene(
                     text: cfg.text,
                     dimOpacity: cfg.dimOpacity,
-                    onNext: { flow.nextIntro() }
+                    onNext: { flow.nextIntro() },
+                    textAlignment: cfg.textAlignment        // ✅ aqui
+
                 )
 
             case .introImage:
@@ -109,7 +111,9 @@ struct AppRootView: View {
                 TextCardScene(
                     text: cfg.text,
                     dimOpacity: cfg.dimOpacity,
-                    onNext: { flow.nextPostLikeAppleText() }
+                    onNext: { flow.nextPostLikeAppleText() },
+                    textAlignment: cfg.textAlignment        // ✅ aqui
+
                 )
 
             // seus casos que já existiam

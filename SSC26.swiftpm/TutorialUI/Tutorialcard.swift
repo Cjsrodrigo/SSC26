@@ -10,6 +10,7 @@ import UIKit
 
 struct TutorialCard: View {
     let text: String
+    var textAlignment: TextAlignment = .leading   // ✅ novo
 
     var maxWidth: CGFloat = 650
     var minWidth: CGFloat = 350
@@ -23,27 +24,40 @@ struct TutorialCard: View {
     private var font: UIFont { .systemFont(ofSize: 17, weight: .regular) }
 
     private var idealWidth: CGFloat {
-        // mede o texto como uma única linha
-        let raw = (text as NSString).size(withAttributes: [.font: font]).width
+        // largura máxima disponível pro TEXTO (sem padding)
+        let maxTextWidth = maxWidth - (horizontalPadding * 2)
 
-        // soma padding e um “respiro” extra
-        let w = raw + (horizontalPadding * 2) + 24
+        // mede com quebra de linha (multiline)
+        let rect = (text as NSString).boundingRect(
+            with: CGSize(width: maxTextWidth, height: .greatestFiniteMagnitude),
+            options: [.usesLineFragmentOrigin, .usesFontLeading],
+            attributes: [.font: font],
+            context: nil
+        )
+
+        // width real do conteúdo + padding
+        let contentW = ceil(rect.width) + (horizontalPadding * 2)
 
         // clamp entre min e max
-        return min(maxWidth, max(minWidth, w))
+        return min(maxWidth, max(minWidth, contentW))
+    }
+    
+    private var frameAlignment: Alignment {
+        textAlignment == .center ? .center : .leading
     }
 
     var body: some View {
         Text(text)
             .font(.system(size: 17, weight: .regular))
             .foregroundStyle(.black)
-            .multilineTextAlignment(.leading)
+            .multilineTextAlignment(textAlignment)
             .lineLimit(nil)
-            .fixedSize(horizontal: false, vertical: true) // ✅ permite quebrar linha e crescer em altura
+            .fixedSize(horizontal: false, vertical: true)
+            .frame(maxWidth: .infinity, alignment: frameAlignment)
             .padding(.horizontal, horizontalPadding)
             .padding(.vertical, verticalPadding)
-            .frame(width: idealWidth, alignment: .leading) // ✅ aqui fica responsivo até maxWidth
-            .frame(minHeight: height, alignment: .leading) // ✅ mantém “altura base” (72/125 etc.)
+            .frame(width: idealWidth, alignment: frameAlignment)
+            .frame(minHeight: height, alignment: frameAlignment)
             .background(
                 RoundedRectangle(cornerRadius: 8)
                     .fill(Color.white.opacity(0.90))
@@ -53,9 +67,7 @@ struct TutorialCard: View {
                     )
                     .shadow(radius: 2, y: 4)
             )
-        .padding(.top, topPadding)
-        
+            .padding(.top, topPadding)
             .animation(.easeInOut(duration: 0.25), value: text)
-
     }
 }

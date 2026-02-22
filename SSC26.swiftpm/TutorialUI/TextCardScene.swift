@@ -12,6 +12,8 @@ struct TextCardScene: View {
     let dimOpacity: Double
     let onNext: () -> Void
 
+    var textAlignment: TextAlignment = .leading
+
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
 
@@ -20,7 +22,7 @@ struct TextCardScene: View {
                 .overlay(Color.black.opacity(dimOpacity))
 
 
-            TutorialCard(text: text)
+            TutorialCard(text: text, textAlignment: textAlignment) // ✅ aqui
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
             Button {

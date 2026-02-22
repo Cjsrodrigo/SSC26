@@ -24,8 +24,10 @@ final class AppFlowViewModel: ObservableObject {
             dimOpacity: 0.90
         ),
         .init(
-            text: "Nearly 100 million people around the globe have the need to use AAC.\nBeukelman & Light, Citation2020",
-            dimOpacity: 0.90
+            text: "Nearly 100 million people around the globe have the need to use AAC.\n\n(Beukelman & Light,2020)",
+            dimOpacity: 0.90,
+            textAlignment: .center
+
         ),
         .init(
             text: "You’ll learn the basics of AAC usage by watching language modeling and completing 2 quick missions.",
@@ -149,11 +151,15 @@ final class AppFlowViewModel: ObservableObject {
         ),
         .init(
             text: "We can never really know what a person is capable of until we provide them the opportunity to learn and show us.\n\n(Gayle Porter, 2009).",
-            dimOpacity: 0.90
+            dimOpacity: 0.90,
+            textAlignment: .center
+ 
         ),
         .init(
-            text: "Everyone should have the right to be heard \n\nqhis is just the beginning. Now you’re free to explore and express anything.",
-            dimOpacity: 0.90
+            text: "Everyone should have the right to be heard \n\nThis is just the beginning. Now you’re free to explore and express anything.",
+            dimOpacity: 0.90,
+            textAlignment: .center
+
         )
     ]
 
