@@ -47,7 +47,7 @@ struct TutorialCard: View {
     }
 
     var body: some View {
-        Text(text)
+        Text(.init(text))
             .font(.system(size: 17, weight: .regular))
             .foregroundStyle(.black)
             .multilineTextAlignment(textAlignment)

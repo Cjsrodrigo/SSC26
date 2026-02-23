@@ -8,26 +8,26 @@ import PackageDescription
 import AppleProductTypes
 
 let package = Package(
-    name: "SSC26",
+    name: "Expresso",
     platforms: [
         .iOS("16.0")
     ],
     products: [
         .iOSApplication(
-            name: "SSC26",
+            name: "Expresso",
             targets: ["AppModule"],
             bundleIdentifier: "AppleAcademy.SSC26",
             teamIdentifier: "6JH9DCVG6B",
             displayVersion: "1.0",
             bundleVersion: "1",
-            appIcon: .placeholder(icon: .openBook),
+            appIcon: .asset("AppIcon"),
             accentColor: .presetColor(.blue),
             supportedDeviceFamilies: [
                 .pad,
                 .phone
             ],
             supportedInterfaceOrientations: [
-                .landscapeRight,
+                .landscapeRight
             ],
             appCategory: .education
         )
@@ -37,8 +37,8 @@ let package = Package(
             name: "AppModule",
             path: ".",
             resources: [
-                           .process("Resources")
-                       ]
+                .process("Resources")
+            ]
         )
     ],
     swiftLanguageVersions: [.version("6")]

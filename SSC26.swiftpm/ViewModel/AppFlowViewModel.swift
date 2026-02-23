@@ -42,7 +42,7 @@ final class AppFlowViewModel: ObservableObject {
     )
 
     let askAfterBreadcrumbCard: TextCardConfig = .init(
-        text: "Playing is so fun, but it's time to go back to class, how about learning more about this method?\n                 🌟",
+        text: "Playing is so fun, but it's time to go back to class, how about learning more about this method?",
         dimOpacity: 0.90
     )
 
@@ -142,17 +142,18 @@ final class AppFlowViewModel: ObservableObject {
     // MARK: - (8) Final text cards (4)
     let postLikeAppleCards: [TextCardConfig] = [
         .init(
-            text: "You did it! \n🌟🌟🌟\nYou were able to communicate using three communicative functions. Requested, refused and commented on something and learn AAC logic.",
-            dimOpacity: 0.90
-        ),
-        .init(
-            text: "Communication is more than words, it’s choice and independence. AAC and help people express needs, feelings and ideas when speech is hard.\nModeling builds connection, when learning it inclusion becomes real at school, at home, and everywhere.",
-            dimOpacity: 0.90
-        ),
-        .init(
-            text: "We can never really know what a person is capable of until we provide them the opportunity to learn and show us.\n\n(Gayle Porter, 2009).",
+            text: "**You did it!**\n\nYou were able to communicate using two communicative functions.\nAsked and commented on something and learn AAC logic.",
             dimOpacity: 0.90,
             textAlignment: .center
+        ),
+        .init(
+            text: "Communication is more than words, it’s choice and independence. AAC helps people express needs, feelings and ideas when speech is hard.\nModeling builds connection, when learning it inclusion becomes real at school, at home, and everywhere.",
+            dimOpacity: 0.90
+        ),
+        .init(
+            text: "\"We can never really know what a person is capable of until we provide them the opportunity to learn and show us.\"\n\n(Gayle Porter, 2009).",
+            dimOpacity: 0.90,
+            //textAlignment: .center
  
         ),
         .init(
