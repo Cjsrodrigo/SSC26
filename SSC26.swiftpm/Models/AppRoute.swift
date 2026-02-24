@@ -8,6 +8,10 @@
 import SwiftUI
 
 enum AppRoute: Equatable {
+    case mainMenu                      // ✅ NOVO
+     case aboutMe  
+    
+    
     case intro(step: Int)     // 0...N-1
     case introImage           // a tela que você disse que é “uma imagem feita por mim”
     

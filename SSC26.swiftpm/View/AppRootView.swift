@@ -9,10 +9,17 @@ import SwiftUI
 
 struct AppRootView: View {
     @StateObject private var flow = AppFlowViewModel()
+    
 
     var body: some View {
         ZStack {
             switch flow.route {
+                
+            case .mainMenu:
+                MainMenuView(flow: flow)
+
+            case .aboutMe:
+                AboutMeView(onBack: { flow.goMainMenu() })
 
             case .intro(let step):
                 let cfg = flow.introCards[min(step, flow.introCards.count - 1)]

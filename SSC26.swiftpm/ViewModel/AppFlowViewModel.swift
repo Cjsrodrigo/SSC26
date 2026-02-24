@@ -11,8 +11,11 @@ import SwiftUI
 final class AppFlowViewModel: ObservableObject {
 
     // MARK: - Current route
-    @Published var route: AppRoute = .intro(step: 0)
+    @Published var route: AppRoute = .mainMenu/*.intro(step: 0)*/
 
+    @AppStorage("expresso.finishedOnce") private var finishedOnce: Bool = false
+    
+    
     // MARK: - (1) Intro (Text cards)
     let introCards: [TextCardConfig] = [
         .init(
@@ -225,9 +228,32 @@ final class AppFlowViewModel: ObservableObject {
         if step < postLikeAppleCards.count - 1 {
             route = .postLikeAppleText(step: step + 1)
         } else {
-            route = .freeBoard
+            
+            finishedOnce = true
+            route = .mainMenu
+
         }
     }
 
     func goFreeBoard() { route = .freeBoard }
+    
+    func goMainMenu() {
+           route = .mainMenu
+       }
+
+       func startExperience() {
+           route = .intro(step: 0)
+       }
+
+       func goFreeMode() {
+           route = .freeBoard
+       }
+
+       func goAboutMe() {
+           route = .aboutMe
+       }
+
+       var canShowUnlockedButtons: Bool { finishedOnce }
+    
+    
 }
