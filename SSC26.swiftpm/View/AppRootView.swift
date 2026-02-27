@@ -10,6 +10,9 @@ import SwiftUI
 struct AppRootView: View {
     @StateObject private var flow = AppFlowViewModel()
     
+    @AppStorage("expresso.appearance") private var appearanceRaw: String = AppAppearance.light.rawValue
+    
+    private var appearanceValue: AppAppearance { AppAppearance(rawValue: appearanceRaw) ?? .light }
 
     var body: some View {
         ZStack {
@@ -124,15 +127,17 @@ struct AppRootView: View {
                 )
 
             // seus casos que já existiam
-            case .refuseChallengeIntro:
+            case .freeBoard:
                 BoardView()
 
-            case .freeBoard:
+            case .refuseChallengeIntro:
                 BoardView()
 
             case .autoPhrase:
                 BoardView()
             }
-        }
+        } .preferredColorScheme(appearanceValue.colorScheme)
+            .environmentObject(flow)   // ✅ aqui
+        
     }
 }

@@ -32,7 +32,7 @@ struct BoardSpotlightOverlay: View {
     let pageId: Int
 
     let mode: HoleMode
-
+    
     var text: String
     var dimOpacity: Double = 0.90
 
@@ -67,7 +67,7 @@ struct BoardSpotlightOverlay: View {
         // ✅ garantir que ocupa tela toda (senão SpotlightMask “some”)
         if #available(iOS 17.0, *) {
             ZStack {
-                BoardViewContent(vm: board)
+                BoardViewContent( vm: board)
                     .allowsHitTesting(false)
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -174,7 +174,7 @@ struct BoardSpotlightOverlay: View {
 
         let tileRects: [CGRect] = tiles.compactMap { rectForTile($0.label) }
             .map { $0.insetBy(dx: -0, dy: -0) } // fecha “frestas”
-
+        
         let tabRect: CGRect? = anchors[.tab(pageId: pid)].map { proxy[$0] }
 
         // ✅ holes: tiles sempre.

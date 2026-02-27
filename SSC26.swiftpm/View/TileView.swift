@@ -10,7 +10,9 @@
     struct TileView: View {
         let tile: BookTile
         let size: CGFloat
-
+        
+        @Environment(\.colorScheme) private var scheme
+        
         var body: some View {
             VStack(spacing: 6) {
 
@@ -21,12 +23,11 @@
 
                 Text(tile.label)
                     .font(.system(size: 13, weight: .regular))
-                    .foregroundStyle(.black)
-                    .lineLimit(1)
+                    .foregroundStyle(AppColors.textOnLightSurface(scheme))                    .lineLimit(1)
             }
             .frame(width: size, height: size)
-            .background(.white)
-            .overlay(
+           
+            .background(AppColors.tilefill(scheme))            .overlay(
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(tile.borderColor, lineWidth: 6)
             )
@@ -35,13 +36,13 @@
         }
     }
 
-    #if canImport(SwiftUI)
-    import SwiftUI
-    #endif
-    #if swift(>=5.9)
-    @available(iOS 17.0, *)
-    #Preview(traits: .landscapeRight) {
-        BoardView()
-    }
-    #endif
+//    #if canImport(SwiftUI)
+//    import SwiftUI
+//    #endif
+//    #if swift(>=5.9)
+//    @available(iOS 17.0, *)
+//    #Preview(traits: .landscapeRight) {
+//        BoardView()
+//    }
+//    #endif
 

@@ -9,11 +9,13 @@ import SwiftUI
 
 struct MainMenuView: View {
     @ObservedObject var flow: AppFlowViewModel
+    
+    @Environment(\.colorScheme) private var scheme
 
     // ✅ preferências persistidas
     @AppStorage("expresso.lang") private var langRaw: String = AppLanguage.en.rawValue
     @AppStorage("expresso.colorBlindMode") private var cbRaw: String = ColorBlindMode.off.rawValue
-    @AppStorage("expresso.appearance") private var appearanceRaw: String = AppAppearance.system.rawValue
+    @AppStorage("expresso.appearance") private var appearanceRaw: String = AppAppearance.light.rawValue
 
     private var languageValue: AppLanguage { AppLanguage(rawValue: langRaw) ?? .en }
     private var appearanceValue: AppAppearance { AppAppearance(rawValue: appearanceRaw) ?? .system }
@@ -69,7 +71,7 @@ struct MainMenuView: View {
             let buttonsSpacing = clamp(contentHeight * 0.02, min: 8, max: 12)
 
             ZStack(alignment: .top) {
-                Color(hex: "#8CCED7").ignoresSafeArea()
+                AppColors.background(scheme).ignoresSafeArea()
 
                 VStack(spacing: 0) {
                     // espaço inicial pra “subir” tudo e não ficar centralizando para baixo
@@ -78,8 +80,7 @@ struct MainMenuView: View {
 
                         Text("Welcome to Expresso")
                             .font(.system(size: titleFont, weight: .bold))
-                            .foregroundStyle(.black)
-                            .lineLimit(1)
+                            .foregroundStyle(AppColors.textOnLightSurface(scheme))                            .lineLimit(1)
                             .minimumScaleFactor(0.85)
                     }
                     .padding(.top, topPadding)
@@ -124,12 +125,12 @@ struct MainMenuView: View {
                 .padding(.horizontal, 18)
                 .padding(.top, topBarHeight)
 
-                // ✅ Topbar fixa
+            //     ✅ Topbar fixa
                 topBar
                     .frame(height: topBarHeight)
                     .padding(.horizontal, 18)
                     .padding(.top, 10)
-            }
+           }
         }
         .preferredColorScheme(appearanceValue.colorScheme)
     }
@@ -138,28 +139,28 @@ struct MainMenuView: View {
         HStack(spacing: 10) {
             
             Spacer()
-            
-            Menu {
-                Picker("Color Blind Mode", selection: colorBlindBinding) {
-                    Text("Off").tag(ColorBlindMode.off)
-                    Text("Protanopia").tag(ColorBlindMode.protanopia)
-                    Text("Deuteranopia").tag(ColorBlindMode.deuteranopia)
-                    Text("Tritanopia").tag(ColorBlindMode.tritanopia)
-                }
-            } label: {
-                TopIconButtonLabel(systemName: "eye.trianglebadge.exclamationmark")
-            }
-
-     
-
-            Menu {
-                Picker("Language", selection: languageBinding) {
-                    Text("English").tag(AppLanguage.en)
-                    Text("Português (Brasil)").tag(AppLanguage.ptBR)
-                }
-            } label: {
-                TopIconButtonLabel(systemName: "globe")
-            }
+//            
+//            Menu {
+//                Picker("Color Blind Mode", selection: colorBlindBinding) {
+//                    Text("Off").tag(ColorBlindMode.off)
+//                    Text("Protanopia").tag(ColorBlindMode.protanopia)
+//                    Text("Deuteranopia").tag(ColorBlindMode.deuteranopia)
+//                    Text("Tritanopia").tag(ColorBlindMode.tritanopia)
+//                }
+//            } label: {
+//                TopIconButtonLabel(systemName: "eye.trianglebadge.exclamationmark")
+//            }
+//
+//     
+//
+//            Menu {
+//                Picker("Language", selection: languageBinding) {
+//                    Text("English").tag(AppLanguage.en)
+//                    Text("Português (Brasil)").tag(AppLanguage.ptBR)
+//                }
+//            } label: {
+//                TopIconButtonLabel(systemName: "globe")
+//            }
 
             Menu {
                 Picker("Appearance", selection: appearanceBinding) {
@@ -179,6 +180,7 @@ struct MainMenuView: View {
             return key
         case .ptBR:
             switch key {
+            case "Welcome to Expresso": return "Bem-vindo a Expresso"
             case "Start experience": return "Iniciar experiência"
             case "Free mode": return "Modo livre"
             case "About me": return "Sobre mim"
@@ -224,23 +226,26 @@ private struct PrimaryMenuButton: View {
     let height: CGFloat
     let action: () -> Void
 
+    @Environment(\.colorScheme) private var scheme
+
+    
     private var fontSize: CGFloat {
         max(16, min(22, height * 0.40))
     }
 
     var body: some View {
-        Button(action: action) {
+        
+        Button(action: action) {            
             Text(title)
                 .font(.system(size: fontSize, weight: .semibold))
-                .foregroundStyle(.black)
+                .foregroundStyle(AppColors.textOnLightSurface(scheme))
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
                 .frame(width: width, height: height)
-                .background(Color.white.opacity(0.9))
-                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .background(AppColors.tilefill(scheme).opacity(0.9))                .clipShape(RoundedRectangle(cornerRadius: 14))
                 .overlay(
                     RoundedRectangle(cornerRadius: 14)
-                        .stroke(Color.black.opacity(0.55), lineWidth: 3)
+                        .stroke(AppColors.stroke(scheme).opacity(0.55), lineWidth: 3)
                 )
                 .shadow(radius: 2, y: 4)
         }
@@ -250,14 +255,15 @@ private struct PrimaryMenuButton: View {
 
 private struct TopIconButtonLabel: View {
     let systemName: String
+    
+    @Environment(\.colorScheme) private var scheme
 
     var body: some View {
         Image(systemName: systemName)
             .font(.system(size: 20, weight: .semibold))
-            .foregroundStyle(.black)
-            .padding(.horizontal, 12)
+            .foregroundStyle(AppColors.textOnLightSurface(scheme))            .padding(.horizontal, 12)
             .padding(.vertical, 10)
-            .background(Color.white.opacity(0.75))
+            .background(AppColors.tilefill(scheme).opacity(0.75))
             .clipShape(RoundedRectangle(cornerRadius: 12))
             .overlay(
                 RoundedRectangle(cornerRadius: 12)

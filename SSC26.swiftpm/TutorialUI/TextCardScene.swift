@@ -14,6 +14,7 @@ struct TextCardScene: View {
 
     var textAlignment: TextAlignment = .leading
 
+
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
 

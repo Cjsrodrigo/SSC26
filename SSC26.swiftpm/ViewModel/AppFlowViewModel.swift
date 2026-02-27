@@ -19,7 +19,7 @@ final class AppFlowViewModel: ObservableObject {
     // MARK: - (1) Intro (Text cards)
     let introCards: [TextCardConfig] = [
         .init(
-            text: "Communication is part of human essence, we continuously find different ways to express ourselves. Augmentative and alternative communication(AAC) is a range of tools and techniques that support or replace spoken communication",
+            text: "Communication is part of human essence, we continuously find different ways to express ourselves. Augmentative and alternative communication(AAC) is a range of tools and techniques that support or replace spoken communication,",
             dimOpacity: 0.90
         ),
         .init(
@@ -63,7 +63,7 @@ final class AppFlowViewModel: ObservableObject {
             sceneTitle: "GID2",
             pageId: 2,
             text: "These core words are used to enable communication across a range of activities and habit aided language.",
-            dimOpacity: 0.80,
+            dimOpacity: 0.90,
             highlightGridAndTab: true,
             cardTopPadding: 0
         ),
@@ -154,11 +154,12 @@ final class AppFlowViewModel: ObservableObject {
             dimOpacity: 0.90
         ),
         .init(
-            text: "\"We can never really know what a person is capable of until we provide them the opportunity to learn and show us.\"\n\n(Gayle Porter, 2009).",
+            text: "This is more just an experience, it's a tool to bring people together.",
             dimOpacity: 0.90,
             //textAlignment: .center
  
         ),
+        
         .init(
             text: "Everyone should have the right to be heard \n\nThis is just the beginning. Now you’re free to explore and express anything.",
             dimOpacity: 0.90,
