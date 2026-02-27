@@ -21,6 +21,6 @@ struct BreadcrumbText: View {
 
             return acc + word + sep
         }
-        .font(.system(size: 12, weight: .medium))
+        .font(.system(size: 12, weight: .bold))
     }
 }

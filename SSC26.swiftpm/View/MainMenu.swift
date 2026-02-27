@@ -242,7 +242,8 @@ private struct PrimaryMenuButton: View {
                 .lineLimit(1)
                 .minimumScaleFactor(0.85)
                 .frame(width: width, height: height)
-                .background(AppColors.tilefill(scheme).opacity(0.9))                .clipShape(RoundedRectangle(cornerRadius: 14))
+                .background(AppColors.tilefill(scheme).opacity(0.9))
+                .clipShape(RoundedRectangle(cornerRadius: 14))
                 .overlay(
                     RoundedRectangle(cornerRadius: 14)
                         .stroke(AppColors.stroke(scheme).opacity(0.55), lineWidth: 3)

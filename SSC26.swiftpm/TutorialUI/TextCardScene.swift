@@ -27,7 +27,7 @@ struct TextCardScene: View {
                 .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .center)
 
             Button {
-                AudioSystem.shared.playSFX("ApplePCClick")
+                AudioSystem.shared.playSFX("ClickNext")
                 onNext()
             } label: {
                 Image("NextButton")

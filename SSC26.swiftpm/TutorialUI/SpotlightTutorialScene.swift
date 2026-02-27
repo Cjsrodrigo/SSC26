@@ -37,7 +37,7 @@ struct SpotlightTutorialScene: View {
 
 
             Button {
-                AudioSystem.shared.playSFX("ApplePCClick")
+                AudioSystem.shared.playSFX("ClickNext")
                 onNext()
             } label: {
                 Image("NextButton")

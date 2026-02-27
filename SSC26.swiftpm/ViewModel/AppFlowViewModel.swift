@@ -154,7 +154,7 @@ final class AppFlowViewModel: ObservableObject {
             dimOpacity: 0.90
         ),
         .init(
-            text: "This is more just an experience, it's a tool to bring people together.",
+            text: "This is more just an experience, it's a bridge to conection.",
             dimOpacity: 0.90,
             //textAlignment: .center
  

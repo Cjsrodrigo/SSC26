@@ -28,7 +28,7 @@ final class AudioSystem: ObservableObject {
             try session.setActive(true, options: [])
 
             // Pré-carrega seus SFX mais usados (ajuste nomes/extensões)
-            preloadSFX(name: "ApplePCClick", ext: "mp3")
+            preloadSFX(name: "ClickNext", ext: "mp3")
             preloadSFX(name: "Bell", ext: "mp3")// ou wav
             // preloadSFX(name: "tap", ext: "wav") ...
 

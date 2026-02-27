@@ -20,7 +20,7 @@ struct ChallengeHUD: View {
         HStack(spacing: 50) {
             Text("Challenge")
                 .foregroundStyle(.black)
-                .font(.system(size: 12, weight: .semibold))
+                .font(.system(size: 12, weight: .bold))
 
                 BreadcrumbText(
                     words: words,

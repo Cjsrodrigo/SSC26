@@ -1,0 +1,9 @@
+License.txt
+
+The pictograms used in the communication board are from ARASAAC (Government of Aragón, Spain), created by Sergio Palao and distributed under the Creative Commons Attribution-NonCommercial-ShareAlike (CC BY-NC-SA) license. I use them as AAC symbols inside this educational, non-commercial Swift Student Challenge playground and provide attribution in the project. If I later publish a public App Store version, I’ve already requested the appropriate permissions to use them.(http://www.arasaac.org) 
+
+I also used a few external sound effects sourced from Zapsplat, with attribution as required. (https://www.zapsplat.com/) under ZapSplat End User License Agreement (EULA). 
+
+
+All other UI, code, layouts, and written content were created by me.
+
