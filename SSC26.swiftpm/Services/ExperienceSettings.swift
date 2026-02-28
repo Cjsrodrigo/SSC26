@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+
+// Future steps
+
 enum AppLanguage: String, CaseIterable, Identifiable {
     case en
     case ptBR
@@ -27,9 +30,9 @@ enum AppAppearance: String, CaseIterable, Identifiable {
     case system
     case light
     case dark
-
+    
     var id: String { rawValue }
-
+    
     var colorScheme: ColorScheme? {
         switch self {
         case .system: return nil

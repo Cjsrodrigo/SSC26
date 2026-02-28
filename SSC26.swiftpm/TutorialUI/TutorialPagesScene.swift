@@ -17,12 +17,12 @@ struct TutorialPagesStepConfig {
 struct TutorialPagesScene: View {
     let cfg: TutorialPagesStepConfig
     let onNext: () -> Void
-
+    
     @StateObject private var board = BoardViewModel(pages: BoardDefinition.makePages())
-
+    
     var body: some View {
         ZStack(alignment: .bottomTrailing) {
-
+            
             BoardSpotlightOverlay(
                 board: board,
                 pageId: cfg.pageId,
@@ -35,17 +35,15 @@ struct TutorialPagesScene: View {
                 cardTopPadding: 0,
                 cardY: 120
             )
-
+            
             Button {
                 AudioSystem.shared.playSFX("ClickNext")
                 onNext()
             } label: {
                 Image("NextButton")
             }
-           // .buttonStyle(PressableButtonStyle())
-
-                .padding(28)
-                .shadow(radius: 2, y: 4)
+            .padding(28)
+            .shadow(radius: 2, y: 4)
         }
         .ignoresSafeArea()
     }

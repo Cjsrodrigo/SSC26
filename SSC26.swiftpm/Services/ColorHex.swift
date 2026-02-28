@@ -7,9 +7,12 @@
 
 import SwiftUI
 
+// Color hex converter for different types of color values
+
+
 extension Color {
-    /// Aceita "#RRGGBB", "RRGGBB", "#AARRGGBB", "AARRGGBB", "#RGB", "RGB"
     init(hex: String) {
+        
         let cleaned = hex
             .trimmingCharacters(in: .whitespacesAndNewlines)
             .replacingOccurrences(of: "#", with: "")
@@ -48,7 +51,6 @@ extension Color {
             b = hexVal(chars[6]) * 16 + hexVal(chars[7])
 
         default:
-            // fallback seguro
             r = 0; g = 0; b = 0; a = 255
         }
 

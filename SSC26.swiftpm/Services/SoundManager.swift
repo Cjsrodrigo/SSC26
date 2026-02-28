@@ -16,43 +16,38 @@ final class AudioSystem: ObservableObject {
 
     private init() {}
 
-    /// Chame 1 vez no app launch / primeira tela
     func warmUp() {
         guard !warmedUp else { return }
         warmedUp = true
 
         do {
             let session = AVAudioSession.sharedInstance()
-            // .ambient: respeita o áudio do usuário e não interrompe música
             try session.setCategory(.ambient, options: [.mixWithOthers])
             try session.setActive(true, options: [])
 
-            // Pré-carrega seus SFX mais usados (ajuste nomes/extensões)
             preloadSFX(name: "ClickNext", ext: "mp3")
-            preloadSFX(name: "Bell", ext: "mp3")// ou wav
-            // preloadSFX(name: "tap", ext: "wav") ...
+            preloadSFX(name: "Bell", ext: "mp3")
 
         } catch {
-            print("❌ Audio warmUp error:", error)
+            print("Audio nao deu warmUp", error)
         }
     }
 
     private func preloadSFX(name: String, ext: String) {
         guard let url = Bundle.module.url(forResource: name, withExtension: ext) else {
-            print("❌ SFX não encontrado:", name, ext)
+            print("SFX não encontrado:", name, ext)
             return
         }
         do {
-            let p = try AVAudioPlayer(contentsOf: url)
-            p.prepareToPlay()   // ✅ reduz a travada do primeiro play
-            sfxPlayers[name] = p
+            let play = try AVAudioPlayer(contentsOf: url)
+            play.prepareToPlay()
+            sfxPlayers[name] = play
         } catch {
-            print("❌ Erro preload:", error)
+            print("Erro preload:", error)
         }
     }
 
     func playSFX(_ name: String) {
-        // Reusa player pré-carregado
         sfxPlayers[name]?.play()
     }
 }

@@ -3,7 +3,7 @@ import SwiftUI
 struct BreadcrumbText: View {
     let words: [String]
     let highlightedCount: Int
-    var flashError: Bool = false   // ✅ novo
+    var flashError: Bool = false  
 
     var body: some View {
         words.enumerated().reduce(Text("")) { acc, item in
