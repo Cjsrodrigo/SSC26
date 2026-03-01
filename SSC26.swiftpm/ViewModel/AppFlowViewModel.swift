@@ -17,7 +17,7 @@ final class AppFlowViewModel: ObservableObject {
     
     let introCards: [TextCardConfig] = [
         .init(
-            text: "Communication is part of human essence, we continuously find different ways to express ourselves. Augmentative and alternative communication(AAC) is a range of tools and techniques that support or replace spoken communication,",
+            text: "Communication is part of human essence, we continuously find different ways to express ourselves. Augmentative and alternative communication(AAC) is a range of tools and techniques that support or replace spoken communication.",
             dimOpacity: 0.90
         ),
         .init(
@@ -85,7 +85,7 @@ final class AppFlowViewModel: ObservableObject {
     
     let refuseTutMsgBoxCfg = SpotlightTutorialConfig(
         pageId: 1,
-        text: "This is where your speech will be shown",
+        text: "This is where your speech will be shown.",
         dimOpacity: 0.90,
         holes: [.messageBox],
         stroke: .messageBox
@@ -93,7 +93,7 @@ final class AppFlowViewModel: ObservableObject {
     
     let refuseTutTopControlsCfg = SpotlightTutorialConfig(
         pageId: 1,
-        text: "You can also repeat it out loud, copy to wherever you want, or erase it",
+        text: "You can also repeat it out loud, copy to wherever you want, or erase it.",
         dimOpacity: 0.90,
         holes: [.speakButton, .messageBox, .copyButton, .eraseButton],
         stroke: nil
@@ -103,25 +103,25 @@ final class AppFlowViewModel: ObservableObject {
         .init(
             sceneTitle: "TutorialPag1",
             pageId: 3,
-            text: "You will have pages representing different aspects of your daily life",
+            text: "You will have pages representing different aspects of your daily life.",
             dimOpacity: 0.90
         ),
         .init(
             sceneTitle: "TutorialPag2",
             pageId: 4,
-            text: "These are often customizable to attend the user's personal life",
+            text: "These are often customizable to attend the user's personal life.",
             dimOpacity: 0.90
         ),
         .init(
             sceneTitle: "TutorialPag3",
             pageId: 5,
-            text: "In this one for example, you can express your feelings a little better",
+            text: "In this one for example, you can express your feelings a little better.",
             dimOpacity: 0.90
         ),
         .init(
             sceneTitle: "TutorialPag4",
             pageId: 6,
-            text: "You're doing great, now let's try to speak all by yourself",
+            text: "You're doing great, now let's try to speak all by yourself.",
             dimOpacity: 0.90
         )
     ]
@@ -136,7 +136,7 @@ final class AppFlowViewModel: ObservableObject {
     
     let postLikeAppleCards: [TextCardConfig] = [
         .init(
-            text: "**You did it!**\n\nYou were able to communicate using two communicative functions.\nAsked and commented on something and learn AAC logic.",
+            text: "**You did it!**\n\nYou were able to communicate using two communicative functions.\nYou asked and commented on something and learned AAC logic.",
             dimOpacity: 0.90,
             textAlignment: .center
         ),
@@ -145,14 +145,14 @@ final class AppFlowViewModel: ObservableObject {
             dimOpacity: 0.90
         ),
         .init(
-            text: "This is more just an experience, it's a bridge to conection.",
+            text: "This is more than just an experience, it's a bridge to conection.",
             dimOpacity: 0.90,
             //textAlignment: .center
             
         ),
         
             .init(
-                text: "Everyone should have the right to be heard \n\nThis is just the beginning. Now you’re free to explore and express anything.",
+                text: "Everyone should have the right to be heard. \n\nThis is just the beginning. Now you’re free to explore and express anything.",
                 dimOpacity: 0.90,
                 textAlignment: .center
                 
